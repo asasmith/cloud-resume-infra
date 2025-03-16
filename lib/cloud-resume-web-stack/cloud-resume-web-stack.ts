@@ -4,17 +4,20 @@ import * as s3 from "aws-cdk-lib/aws-s3";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
-
-interface CloudResumeWebsiteStackProps extends cdk.StackProps {
-  account: string;
-  region: string;
-}
+import {
+  Certificate,
+  CertificateValidation,
+} from "aws-cdk-lib/aws-certificatemanager";
 
 export class CloudResumeWebsiteStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: CloudResumeWebsiteStackProps) {
+  constructor(
+    scope: Construct,
+    id: string,
+    props?: cdk.StackProps,
+  ) {
     super(scope, id, props);
 
-    const bucket = new s3.Bucket(this, "CloudResumeInfraBucket", {
+    const bucket = new s3.Bucket(this, "CloudResumeStaticWebBucket", {
       bucketName: `cloud-resume-${this.account}-${this.region}`,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -28,6 +31,11 @@ export class CloudResumeWebsiteStack extends cdk.Stack {
       originAccessControl: oac,
     });
 
+    const certificate = new Certificate(this, "CloudResumeStaticWebCertificate", {
+      domainName: "resume.asasmith.dev",
+      validation: CertificateValidation.fromDns(),
+    });
+
     const distribution = new cloudfront.Distribution(
       this,
       "WebSiteDistribution",
@@ -39,6 +47,8 @@ export class CloudResumeWebsiteStack extends cdk.Stack {
           cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
         },
         defaultRootObject: "index.html",
+        domainNames: ["resume.asasmith.dev"],
+        certificate,
       },
     );
 
@@ -55,11 +65,6 @@ export class CloudResumeWebsiteStack extends cdk.Stack {
     });
 
     bucket.addToResourcePolicy(cloudFrontPolicy);
-
-    new cdk.CfnOutput(this, "CloudfrontDistributionId", {
-      value: distribution.distributionId,
-      exportName: "CloudfrontDistributionId",
-    });
 
     new cdk.CfnOutput(this, "CloudfrontUrl", {
       value: `https://${distribution.distributionDomainName}`,
