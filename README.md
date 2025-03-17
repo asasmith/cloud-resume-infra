@@ -15,7 +15,8 @@ I hope to gain a better understanding of aws services and how to manage those se
 ## Todo
 
 - [ ] Create resume using html
-- [x] Add github action workflow to deploy updates to s3
+    - Repo setup [here](https://github.com/asasmith/cloud-resume-frontend)
+- [x] Add github action workflow to deploy updates to s3 ([workflow.yml](https://github.com/asasmith/cloud-resume-frontend/blob/main/.github/workflows/deploy.yml))
 - [ ] Style resume with css
 - [x] Create s3 bucket for static website
 - [x] Add cloudfront distribution and acm cert for https
