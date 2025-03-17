@@ -1,8 +1,30 @@
-# Welcome to your CDK TypeScript project
+# Cloud Resume Challenge
 
-This is a blank project for CDK development with TypeScript.
+This repo holds all of the infrastructure as code (iac) for my [Cloud Resume Project](https://cloudresumechallenge.dev/docs/the-challenge/aws/). The project reqs are:
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+- Create a resume static website
+- Use a custom domain
+- Implement a visitor counter
+- Automate deployments
+- Utilize aws services (s3, cloudformation, cloudfront, dynamoDB, api gateway, lambda)
+- Leverage aws cdk for all resources
+
+## Goals
+I hope to gain a better understanding of aws services and how to manage those services via infrastructure as code. I would also like to have a more complete mental model of devops and devops best practices. I chose aws cdk because I have experience with js/ts and I've taken a Frontend Masters course that had a cdk portion (that course used Go).
+
+## Todo
+
+- [ ] Create resume using html
+- [x] Add github action workflow to deploy updates to s3
+- [ ] Style resume with css
+- [x] Create s3 bucket for static website
+- [x] Add cloudfront distribution and acm cert for https
+- [x] Point custom domain to cloudfront distibution ((resume.asasmith.dev)[https://resume.asasmith.dev])
+- [ ] Add visitor counter to static web site
+- [ ] Set up dynamoDB to track visitor count
+- [ ] Add lambda func/api to interact with dynamoDB
+- [ ] Tests 
+- [ ] Get cloud practitioner cert
 
 ## Useful commands
 
