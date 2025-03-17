@@ -19,7 +19,7 @@ I hope to gain a better understanding of aws services and how to manage those se
 - [ ] Style resume with css
 - [x] Create s3 bucket for static website
 - [x] Add cloudfront distribution and acm cert for https
-- [x] Point custom domain to cloudfront distibution ((resume.asasmith.dev)[https://resume.asasmith.dev])
+- [x] Point custom domain to cloudfront distibution ([resume.asasmith.dev](https://resume.asasmith.dev))
 - [ ] Add visitor counter to static web site
 - [ ] Set up dynamoDB to track visitor count
 - [ ] Add lambda func/api to interact with dynamoDB
