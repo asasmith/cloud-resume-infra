@@ -10,11 +10,9 @@ import {
 } from "aws-cdk-lib/aws-certificatemanager";
 
 export class CloudResumeWebsiteStack extends cdk.Stack {
-  constructor(
-    scope: Construct,
-    id: string,
-    props?: cdk.StackProps,
-  ) {
+  public readonly distribution: cloudfront.Distribution;
+
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const bucket = new s3.Bucket(this, "CloudResumeStaticWebBucket", {
@@ -31,10 +29,14 @@ export class CloudResumeWebsiteStack extends cdk.Stack {
       originAccessControl: oac,
     });
 
-    const certificate = new Certificate(this, "CloudResumeStaticWebCertificate", {
-      domainName: "resume.asasmith.dev",
-      validation: CertificateValidation.fromDns(),
-    });
+    const certificate = new Certificate(
+      this,
+      "CloudResumeStaticWebCertificate",
+      {
+        domainName: "resume.asasmith.dev",
+        validation: CertificateValidation.fromDns(),
+      },
+    );
 
     const distribution = new cloudfront.Distribution(
       this,
@@ -65,6 +67,8 @@ export class CloudResumeWebsiteStack extends cdk.Stack {
     });
 
     bucket.addToResourcePolicy(cloudFrontPolicy);
+
+    this.distribution = distribution;
 
     new cdk.CfnOutput(this, "CloudfrontUrl", {
       value: `https://${distribution.distributionDomainName}`,

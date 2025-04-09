@@ -6,8 +6,10 @@ import { IamStack, CloudResumeWebsiteStack } from "../lib";
 const app = new cdk.App();
 const product = 'cloud-resume';
 
-new IamStack(app, `${product}-iam-stack`);
-new CloudResumeWebsiteStack(app, `${product}-web-stack`); 
+const webStack = new CloudResumeWebsiteStack(app, `${product}-web-stack`); 
+new IamStack(app, `${product}-iam-stack`, {
+    cloudfrontDistribution: webStack.distribution,
+});
 
 app.synth();
 
