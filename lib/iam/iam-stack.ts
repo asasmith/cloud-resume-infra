@@ -45,7 +45,7 @@ export class IamStack extends cdk.Stack {
         service: "cloudfront",
         resource: `distribution/${props!.cloudfrontDistribution.distributionId}`,
         account: cdk.Stack.of(this).account,
-        region: "", // CloudFront is a global service, region must be an empty string
+        region: "",
       },
       this,
     );
