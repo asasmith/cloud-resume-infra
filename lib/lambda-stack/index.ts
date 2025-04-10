@@ -5,21 +5,28 @@ import * as apigateway from "aws-cdk-lib/aws-apigateway";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 
 interface LambdaStackProps extends StackProps {
-  table: dynamodb.Table;
+    table: dynamodb.Table;
 }
 
 export class LambdaStack extends Stack {
-  constructor(scope: Construct, id: string, props?: LambdaStackProps) {
-    super(scope, id, props);
+    constructor(scope: Construct, id: string, props: LambdaStackProps) {
+        super(scope, id, props);
 
-    const visitorLambda = new lambda.Function(this, "VisitorCountHandler", {
-      runtime: lambda.Runtime.NODEJS_22_X,
-      code: lambda.Code.fromAsset("lambda"),
-      handler: "index.handler",
-    });
+        const { table } = props;
 
-    new apigateway.LambdaRestApi(this, "VisitorCountApi", {
-      handler: visitorLambda,
-    });
-  }
+        const visitorLambda = new lambda.Function(this, "VisitorCountHandler", {
+            runtime: lambda.Runtime.NODEJS_22_X,
+            code: lambda.Code.fromAsset("lambda"),
+            handler: "index.handler",
+            environment: {
+                TABLE_NAME: table.tableName,
+            },
+        });
+
+        table.grantReadWriteData(visitorLambda);
+
+        new apigateway.LambdaRestApi(this, "VisitorCountApi", {
+            handler: visitorLambda,
+        });
+    }
 }
