@@ -25,8 +25,20 @@ export class LambdaStack extends Stack {
 
         table.grantReadWriteData(visitorLambda);
 
-        new apigateway.LambdaRestApi(this, "VisitorCountApi", {
+        const lambdaRestApi = new apigateway.LambdaRestApi(this, "VisitorCountApi", {
             handler: visitorLambda,
+            defaultCorsPreflightOptions: {
+                allowOrigins: ['https://resume.asasmith.dev'],
+                allowMethods: ['GET'],
+            },
         });
+
+        lambdaRestApi.addUsagePlan('LambdaRateLimitPlan', {
+            name: 'LambdaRateLimitPlan',
+            throttle: {
+                rateLimit: 5,
+                burstLimit: 2,
+            },
+        })
     }
 }
