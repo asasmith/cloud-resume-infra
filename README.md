@@ -2,7 +2,7 @@
 
 This repo holds all of the infrastructure as code (iac) for my [Cloud Resume Project](https://cloudresumechallenge.dev/docs/the-challenge/aws/). The project reqs are:
 
-- Create a resume static website
+- Create a resume static website ([resume.asasmith.dev](https://resume.asasmith.dev))
 - Use a custom domain
 - Implement a visitor counter
 - Automate deployments
@@ -14,16 +14,16 @@ I hope to gain a better understanding of aws services and how to manage those se
 
 ## Todo
 
-- [ ] Create resume using html
+- [x] Create resume using html
     - Repo setup [here](https://github.com/asasmith/cloud-resume-frontend)
 - [x] Add github action workflow to deploy updates to s3 ([workflow.yml](https://github.com/asasmith/cloud-resume-frontend/blob/main/.github/workflows/deploy.yml))
-- [ ] Style resume with css
+- [x] Style resume with css
 - [x] Create s3 bucket for static website
 - [x] Add cloudfront distribution and acm cert for https
 - [x] Point custom domain to cloudfront distibution ([resume.asasmith.dev](https://resume.asasmith.dev))
-- [ ] Add visitor counter to static web site
-- [ ] Set up dynamoDB to track visitor count
-- [ ] Add lambda func/api to interact with dynamoDB
+- [x] Add visitor counter to static web site
+- [x] Set up dynamoDB to track visitor count
+- [x] Add lambda func/api to interact with dynamoDB
 - [ ] Tests 
 - [ ] Get cloud practitioner cert
 
